@@ -1,0 +1,75 @@
+<section id="body" name="body"></section>
+<div class="container" ng-controller="ManagePage">
+  <div class="col-md-12">
+    <h1>Manage Articles</h1>
+  </div>
+  <div class="col-md-10 col-md-offset-1">
+    <!-- LOGOUT -->
+    <h3>Nuevo artículo.</h3>
+    <div class="col-md-8 col-md-offset-2">
+      <div class="well">
+	<form role="form">
+	  <div class="form-group">
+	    <label for="title">Título</label>
+    	    <input type="text" class="form-control" id="title"
+		   ng-model="newarticle.title" required
+		   >
+	  </div>
+	  <div class="form-group">
+	    <label for="slug">Slug</label>
+    	    <input type="text" class="form-control" id="slug"
+		   ng-model="newarticle.slug" required
+		   >
+	  </div>
+	  <div class="form-group">
+	    <label for="keywords">
+	      Palabras clave separadas por espacios
+	    </label>
+    	    <input type="text" class="form-control" id="keywords"
+		   ng-model="newarticle.keywords" required
+		   >
+	  </div>
+	  <div class="form-group">
+	    <label for="text">Texto</label>
+    	    <textarea class="form-control" rows="5" id="text"
+		      placeholder="Cuerpo del artículo"
+		      ng-model="newarticle.text" required>
+	    </textarea>
+	  </div>
+	  <div class="form-group">
+	    <label for="secret">Palabra clave</label>
+    	    <input type="text" class="form-control" id="secret"
+		   ng-model="newarticle.secret" required
+		   >
+	  </div>
+	  <button class="btn btn-default" ng-click="submitarticle()">
+	    Publicar
+	  </button>
+	</form>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <table class="table">
+	<tr>
+	  <th>Título</th><th>Fecha</th><th>Operaciones</th>
+	</tr>
+	<tr ng-repeat="article in articles">
+	  <td>{{ article.title }}</td>
+	  <td>{{ article.when | date:'dd/MM/yyyy @ h:mma' }}</td>
+	  <td>
+	    <a href="/manage/edit/{{ article.key }}">
+	      <i class="fa fa-edit"></i></a> &nbsp;
+	    <a href="/manage/delete/{{ article.key }}">
+	      <i class="fa fa-trash-o"></i></a>
+	  </td>
+	</tr>
+      </table>
+      <p class="centered">
+	<button ng-click="loadnext()">
+	  <i class="fa fa-arrow-down"></i>
+	  Entradas anteriores.
+	</button>
+      </p>
+    </div>
+  </div>
+</div>

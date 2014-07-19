@@ -1,0 +1,63 @@
+<section id="body" name="body"></section>
+<div class="container" ng-controller="EditPage">
+  <div class="col-md-12">
+    <a href="/manage"><h2>Manage</h2></a>
+  </div>
+  <div class="col-md-10 col-md-offset-1">
+    <h3>Edit article</h3>
+    <div class="col-md-8 col-md-offset-2">
+      <div class="well">
+	<form role="form">
+	  <div class="form-group">
+	    <label for="title">Título</label>
+    	    <input type="text" class="form-control" id="title"
+		   ng-model="article.title" required
+		   >
+	  </div>
+	  <div class="form-group">
+	    <label for="key">Key</label>
+    	    <input type="text" class="form-control" id="key"
+		   ng-model="article.key" required
+		   >
+	  </div>
+	  <div class="form-group">
+	    <label for="when">When</label>
+    	    <input type="text" class="form-control" id="when"
+		   ng-model="article.when" required
+		   >
+	  </div>
+	  <div class="form-group">
+	    <label for="slug">Slug</label>
+    	    <input type="text" class="form-control" id="slug"
+		   ng-model="article.slug" required
+		   >
+	  </div>
+	  <div class="form-group">
+	    <label for="keywords">
+	      Palabras clave separadas por espacios
+	    </label>
+    	    <input type="text" class="form-control" id="keywords"
+		   ng-model="article.keywords" required
+		   >
+	  </div>
+	  <div class="form-group">
+	    <label for="text">Texto</label>
+    	    <textarea class="form-control" rows="5" id="text"
+		      placeholder="Cuerpo del artículo"
+		      ng-model="article.text" required>
+	    </textarea>
+	  </div>
+	  <div class="form-group">
+	    <label for="secret">Palabra clave</label>
+    	    <input type="text" class="form-control" id="secret"
+		   ng-model="article.secret" required
+		   >
+	  </div>
+	  <button class="btn btn-default" ng-click="editArticle()">
+	    Editar
+	  </button>
+	</form>
+      </div>
+    </div>
+  </div>
+</div>

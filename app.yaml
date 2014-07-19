@@ -1,0 +1,46 @@
+application: guillemborrell
+version: 4
+runtime: python27
+api_version: 1
+threadsafe: true
+
+libraries:
+- name: webapp2
+  version: latest
+
+
+handlers:
+- url: /css
+  static_dir: css
+
+- url: /js
+  static_dir: js
+
+- url: /img
+  static_dir: img
+
+- url: /font
+  static_dir: font
+  
+- url: /fonts
+  static_dir: fonts
+
+- url: /favicon.ico
+  static_files: img/favicon.ico
+  upload: img/favicon.ico
+
+- url: /favicon.png
+  static_files: img/favicon.png
+  upload: img/favicon.png
+
+- url: /robots.txt
+  static_files: static/robots.txt
+  upload: static/robots.txt
+
+- url: /humans.txt
+  static_files: static/humans.txt
+  upload: static/humans.txt
+
+- url: /.*
+  script: main.app
+

@@ -1,0 +1,20 @@
+<!-- ========== BODY ========== -->
+<section id="body" name="body"></section>
+<div class="container" ng-controller="ArchivePage">
+  <div class="col-md-12">
+    <h1>Archivo</h1>
+    <p>Puede tardar un rato en cargar...</p>
+    <table class="table">
+	<tr>
+	  <th>Título</th><th>Fecha</th><th>Comentarios</th>
+	</tr>
+	<tr ng-repeat="article in articles">
+	  <td id="{{ article.key }}">
+	    <a href="/article/{{ article.key }}">{{ article.title }}</a>
+	  </td>
+	  <td>{{ article.when | date:'dd/MM/yyyy @ h:mma' }}</td>
+	  <td>{{ article.ncomments }} </td>
+	</tr>
+      </table>
+  </div>
+</div><!-- /container -->

@@ -1,0 +1,80 @@
+<!-- ========== BODY ========== -->
+<section id="body" name="body"></section>
+<div class="container" ng-controller="MainPage">
+  <div class="row" ng-repeat="article in articles">
+    <div class="col-md-8 col-md-offset-2">
+      <h1><a href="/article/{{ article.key }}">{{ article.title }}</a></h1>
+      <p class="centered">
+	<i class="fa fa-circle"></i>
+	<i class="fa fa-circle"></i>
+	<i class="fa fa-circle"></i>
+      </p>
+      <div class="col-lg-10 col-lg-offset-1">
+	<div ng-bind-html="article.text">
+	  {{ article.text }}
+	</div>
+	<p>
+	  <strong>Archivado en:</strong>
+	  <span ng-repeat="keyword in article.keywords">{{
+	  keyword }},</span>
+	</p>
+	<div class="well">
+	  <div class="row">
+	    <div class="col-md-4 text-center">
+	      <a href="/archive#{{ article.key }}">
+	      <i class="fa fa-clock-o fa-2x"></i>
+	      <br/> {{ article.when | date:'dd/MM/yyyy @ h:mma'}} 
+	      </a>
+	    </div>
+	    <div class="col-md-3 text-center">
+	      <a href="/article/{{ article.key }}" data-toggle="tooltip"
+		 data-placement="bottom" title="Ver y dejar comentarios"
+		 >
+		<i class="fa fa-comments fa-2x"></i><br/>
+		<span class="badge">
+		  <strong>{{ article.ncomments}}</strong>
+		</span>
+	      </a>
+	    </div> 
+	    <div class="col-md-5 text-center">
+	      Compartir: <br/>
+	      <a href=""><i data-toggle="tooltip" title="Compartir con Twitter" 
+		 class="fa fa-twitter-square fa-2x" 
+		 ng-click="shareTwitter(article)">
+	      </i></a>&nbsp;
+	      <a href="">
+		<i data-toggle="tooltip" title="Compartir con Facebook" 
+		   class="fa fa-facebook-square fa-2x" 
+		   ng-click="shareFacebook(article)">
+		</i>
+	      </a>&nbsp;
+	      <a href="">
+		<i data-toggle="tooltip" title="Compartir con Tumblr" 
+		   class="fa fa-tumblr-square fa-2x" 
+		   ng-click="shareTumblr(article)">
+	      </i>
+	      </a>&nbsp;
+	      <a href="">
+		<i data-toggle="tooltip" title="Compartir con Google Plus" 
+		   class="fa fa-google-plus-square fa-2x" 
+		   ng-click="shareGooglePlus(article)">
+	      </i>
+	      </a>&nbsp;
+	      <a href="mailto:?subject=Entrada en el blog de Guillem Borrell&amp;body=http://www.guillemborrell.es/article/{{
+		       article.key }}."
+	      title="">
+		<i class="fa fa-envelope fa-2x"></i>
+	      </a>
+	    </div>
+	  </div>
+	</div>
+      </div>
+    </div>	
+  </div>
+  <p class="centered">
+    <button ng-click="loadnext()">
+      <i class="fa fa-arrow-down"></i>
+      Entradas anteriores.
+    </button>
+  </p>
+</div><!-- /container -->

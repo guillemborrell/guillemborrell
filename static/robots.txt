@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /css
+Disallow: /js
+Disallow: /img
+Disallow: /font
+Disallow: /fonts
+Disallow: /wiki
+Disallow: /blog
+Disallow: /feed
+Disallow: /rss
+
