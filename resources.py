@@ -179,14 +179,13 @@ class ArticleLastRSS(webapp2.RequestHandler):
         items = []
         for i,article in enumerate(articles):
             items.append(ET.SubElement(channel,'item'))
-            ET.SubElement(items[i],'title').text=article.title
-            ET.SubElement(items[i],'description').text= article.text
-            ET.SubElement(items[i],'link').text='http://guillemborrell.es/article/{}'.format(article.key.urlsafe())
-            ET.SubElement(items[i],'guid').text=article.key.urlsafe()
-            ET.SubElement(items[i],'pubDate').text=article.when.strftime(
+            ET.SubElement(items[i],'title').text = article.title
+            ET.SubElement(items[i],'description').text = article.text
+            ET.SubElement(items[i],'link').text ='http://guillemborrell.es/article/{}'.format(article.key.urlsafe())
+            ET.SubElement(items[i],'guid').text = article.key.urlsafe()
+            ET.SubElement(items[i],'pubDate').text= article.when.strftime(
                 '%a, %d %b %Y %H:%M:%S %z')
             
-        self.response.out.headers['Content-Type'] = 'application/rss+xml'
         self.response.out.write(ET.tostring(rss))
 
 
