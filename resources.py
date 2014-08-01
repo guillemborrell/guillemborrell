@@ -186,8 +186,8 @@ class ArticleLastRSS(webapp2.RequestHandler):
             ET.SubElement(items[i],'pubDate').text=article.when.strftime(
                 '%a, %d %b %Y %H:%M:%S %z')
             
+        self.response.out.headers['Content-Type'] = 'application/rss+xml'
         self.response.out.write(ET.tostring(rss))
-                         
 
 
 class CommentResource(webapp2.RequestHandler):
