@@ -55,6 +55,11 @@ function fillArticle (article,sce) {
     }
 }
 
+function resetpage(){
+    window.location.replace('/');
+}
+
+
 function MainPage($scope,$resource,$sce,$location){
     $scope.articles = [];
     $scope.shareTwitter = shareTwitter;
@@ -94,6 +99,7 @@ function MainPage($scope,$resource,$sce,$location){
 		$scope.taggedbutton = true;
 		if (reset){
 		    $scope.articles = [];
+		    $("html, body").animate({ scrollTop: $("#body").offset().top }, "slow");
 		}
 		for (var i in data.articles){
 		    $scope.articles.push(fillArticle(data.articles[i],$sce));
@@ -153,7 +159,6 @@ function ArticlePage($scope,$resource,$sce){
 				 "when": null};
 	}
     }
-    
 }
 
 function ManagePage($scope,$resource,$sce){
