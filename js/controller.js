@@ -120,6 +120,7 @@ function ArticlePage($scope,$resource,$sce){
     $scope.shareFacebook = shareFacebook;
     $scope.shareTumblr = shareTumblr;
     $scope.shareGooglePlus = shareGooglePlus;
+    $scope.taggedArticleListResource = $resource("/API/taggedarticlelist");
     $scope.replaceNewLines = function(text){
 	return $sce.trustAsHtml(
 	    text.replace(/\r\n/g, '<br />').replace(/[\r\n]/g, '<br />')
