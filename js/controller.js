@@ -61,28 +61,45 @@ function MainPage($scope,$resource,$sce,$location){
     $scope.shareFacebook = shareFacebook;
     $scope.shareTumblr = shareTumblr;
     $scope.shareGooglePlus = shareGooglePlus;
-    var firstpageresource = $resource("/API/articlelist:q");
+    $scope.articleListResource = $resource("/API/articlelist");
+    $scope.taggedArticleListResource = $resource("/API/taggedarticlelist");
 
-    var data = firstpageresource.get({q:""}, function(){
+    var data = $scope.articleListResource.get( function(){
 	$scope.more = data.more;
 	$scope.next = data.next;
 	for (var i in data.articles){
 	    $scope.articles.push(fillArticle(data.articles[i],$sce));
 	}
     }
-				    );
+					     );
     
     $scope.loadnext = function(){
-	var pageresource = $resource("/API/articlelist?p=:q");
-	
-	var data = pageresource.get({q:$scope.next}, function(){
-	    $scope.more = data.more;
-	    $scope.next = data.next;
-	    for (var i in data.articles){
-		$scope.articles.push(fillArticle(data.articles[i],$sce));
+	var data = $scope.articleListResource.get(
+	    {p:$scope.next}, function(){
+		$scope.more = data.more;
+		$scope.next = data.next;
+		for (var i in data.articles){
+		    $scope.articles.push(fillArticle(data.articles[i],$sce));
+		}
 	    }
-	}
-				   );
+	);
+    }
+    
+    $scope.loadtag = function(thistag,reset){
+	var data = $scope.taggedArticleListResource.get(
+	    {tag:thistag, p:$scope.taggednext}, function() {
+		$scope.tag = thistag;
+		$scope.more = data.more;
+		$scope.taggednext = data.next;
+		$scope.taggedbutton = true;
+		if (reset){
+		    $scope.articles = [];
+		}
+		for (var i in data.articles){
+		    $scope.articles.push(fillArticle(data.articles[i],$sce));
+		}
+	    }
+	);
     }
 }
 

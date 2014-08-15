@@ -9,6 +9,7 @@ import json
 import string
 import logging
 import re, datetime
+import array
 import xml.etree.ElementTree as ET
 from google.appengine.ext import ndb
 from google.appengine.datastore.datastore_query import Cursor
@@ -140,6 +141,63 @@ class ArticleListResource(webapp2.RequestHandler):
             else:
                 curs = None
             
+            self.response.out.headers['Content-Type'] = 'application/json'
+            self.response.out.write(
+                json.dumps(
+                    {'articles': [a.as_dict() for a in articles],
+                     'next': curs,
+                     'more': more}
+                )
+            )        
+
+
+class TaggedArticleListResource(webapp2.RequestHandler):
+    '''
+    classdocs
+    '''
+    def get(self):
+        tag = self.request.get('tag')
+        if self.request.get('p'):
+            curs = Cursor(urlsafe=self.request.get('p'))
+            articles = list()
+            query_iterator = Article.query().order(
+                -Article.when).iter(produce_cursors=True,
+                                    start_cursor=curs)
+
+            for article in query_iterator:
+                if tag in article.keywords:
+                    articles.append(article)
+                    if len(articles) == ITEMS_PER_PAGE:
+                        break
+
+            curs = query_iterator.cursor_after().urlsafe()
+            more = query_iterator.probably_has_next()
+
+            self.response.out.headers['Content-Type'] = 'application/json'
+            self.response.out.write(
+                json.dumps(
+                    {'articles': [a.as_dict() for a in articles],
+                     'next': curs,
+                     'more': more}
+                )
+            )
+            
+        # If nothing is queried, return initial page.
+        # TODO: merge those two conditionals.
+        else:
+            articles = list()
+            query_iterator = Article.query().order(
+                -Article.when).iter(produce_cursors=True)
+
+            for article in query_iterator:
+                if tag in article.keywords:
+                    articles.append(article)
+                    if len(articles) == ITEMS_PER_PAGE:
+                        break
+
+            curs = query_iterator.cursor_after().urlsafe()
+            more = query_iterator.probably_has_next()
+
             self.response.out.headers['Content-Type'] = 'application/json'
             self.response.out.write(
                 json.dumps(

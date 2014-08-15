@@ -7,6 +7,7 @@ app = webapp2.WSGIApplication(
         webapp2.Route(r'/API/archive', ArchiveResource),
         webapp2.Route(r'/API/article', ArticleResource),
         webapp2.Route(r'/API/articlelist', ArticleListResource),
+        webapp2.Route(r'/API/taggedarticlelist', TaggedArticleListResource),
         webapp2.Route(r'/API/articlekeyfromslug', ArticleKeyFromSlugResource),
         webapp2.Route(r'/blog/<slug:.*>/', ArticleFromSlug), #hack
         webapp2.Route(r'/blog/<slug:.*>', ArticleFromSlug),
