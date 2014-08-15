@@ -11,8 +11,8 @@
 	    </div>
 	    <p>
 	      <span ng-repeat="keyword in article.keywords">
-		<button class="btn" ng-click="loadtag(keyword,true)">{{
-		keyword }}</button></span>
+		<button class="btn" ng-click="loadtag(keyword,true)">{{ keyword }}</button>
+	      </span>
 	    </p>
 	    <div class="well">
 	      <div class="row">
@@ -24,8 +24,7 @@
 		</div>
 		<div class="col-md-3 text-center">
 		  <a href="/article/{{ article.key }}" data-toggle="tooltip"
-		     data-placement="bottom" title="Ver y dejar comentarios"
-		     >
+		     data-placement="bottom" title="Ver y dejar comentarios">
 		    <i class="fa fa-comments fa-2x"></i><br/>
 		    <span class="badge">
 		      <strong>{{ article.ncomments}}</strong>
@@ -34,32 +33,51 @@
 		</div> 
 		<div class="col-md-5 text-center">
 		  Compartir: <br/>
-		  <a href=""><i data-toggle="tooltip" title="Compartir con Twitter" 
-				class="fa fa-twitter-square fa-2x" 
-				ng-click="shareTwitter(article)">
-		  </i></a>&nbsp;
-		  <a href="">
-		    <i data-toggle="tooltip" title="Compartir con Facebook" 
-		       class="fa fa-facebook-square fa-2x" 
-		       ng-click="shareFacebook(article)">
-		    </i>
-		  </a>&nbsp;
-		  <a href="">
-		    <i data-toggle="tooltip" title="Compartir con Tumblr" 
-		       class="fa fa-tumblr-square fa-2x" 
-		       ng-click="shareTumblr(article)">
-		    </i>
-		  </a>&nbsp;
-		  <a href="">
-		    <i data-toggle="tooltip" title="Compartir con Google Plus" 
-		       class="fa fa-google-plus-square fa-2x" 
-		       ng-click="shareGooglePlus(article)">
-		    </i>
-		  </a>&nbsp;
+		  <a href=""
+		     ng-click="shareTwitter(article)"
+		     data-toggle="tooltip"
+		     title="Compartir con Twitter">
+		    <span class="fa-stack fa-lg">
+		      <i class="fa fa-circle fa-stack-2x"></i>
+		      <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		    </span>
+		  </a>
+		  <a href=""
+		     ng-click="shareFacebook(article)" 
+		     data-toggle="tooltip"
+		     title="Compartir con Facebook">
+		    <span class="fa-stack fa-lg">
+		      <i class="fa fa-circle fa-stack-2x"></i>
+		      <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		    </span>
+		  </a>
+		  <a href=""
+		     ng-click="shareTumblr(article)"
+		     data-toggle="tooltip"
+		     title="Compartir con Tumblr">
+		    <span class="fa-stack fa-lg">
+		      <i class="fa fa-circle fa-stack-2x"></i>
+		      <i class="fa fa-tumblr fa-stack-1x fa-inverse"></i>
+		    </span>
+		  </a>
+		  <a href=""
+		     ng-click="shareGooglePlus(article)"
+		     data-toggle="tooltip"
+		     data-placement="bottom"
+		     title="Compartir con Google+">
+		    <span class="fa-stack fa-lg">
+		      <i class="fa fa-circle fa-stack-2x"></i>
+		      <i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		    </span>
+		  </a>
 		  <a href="mailto:?subject=Entrada en el blog de Guillem Borrell&amp;body=http://www.guillemborrell.es/article/{{
 			   article.key }}."
-		     title="">
-		    <i class="fa fa-envelope fa-2x"></i>
+		     data-toggle="tooltip"
+		     title="Enviar por correo electrónico">
+		    <span class="fa-stack fa-lg">
+		      <i class="fa fa-circle fa-stack-2x"></i>
+		      <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+		    </span>
 		  </a>
 		</div>
 	      </div>

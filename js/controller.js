@@ -162,6 +162,26 @@ function ArticlePage($scope,$resource,$sce){
 				 "when": null};
 	}
     }
+    $scope.loadtag = function(thistag,reset){
+	if (reset){
+	    $scope.taggednext = '';
+	}
+	var data = $scope.taggedArticleListResource.get(
+	    {tag:thistag, p:$scope.taggednext}, function() {
+		$scope.tag = thistag;
+		$scope.more = data.more;
+		$scope.taggednext = data.next;
+		$scope.taggedbutton = true;
+		if (reset){
+		    $scope.articles = [];
+		    $("html, body").animate({ scrollTop: $("#body").offset().top }, "slow");
+		}
+		for (var i in data.articles){
+		    $scope.articles.push(fillArticle(data.articles[i],$sce));
+		}
+	    }
+	);
+    }    
 }
 
 function ManagePage($scope,$resource,$sce){
