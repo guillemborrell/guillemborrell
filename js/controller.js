@@ -92,6 +92,9 @@ function MainPage($scope,$resource,$sce,$location){
     
     $scope.loadtag = function(thistag,reset){
 	var data = $scope.taggedArticleListResource.get(
+	    if (reset){
+		$scope.taggednext = '';
+	    }
 	    {tag:thistag, p:$scope.taggednext}, function() {
 		$scope.tag = thistag;
 		$scope.more = data.more;
