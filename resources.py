@@ -56,6 +56,7 @@ class ArticleResource(webapp2.RequestHandler):
             self.response.out.headers['Content-Type'] = 'application/json'
             self.response.out.write(json.dumps(article.as_dict()))
 
+    @ndb.transactional
     def post(self):
         d = json.loads(self.request.body)
         if d['secret'] == '16jutges16':
@@ -273,6 +274,7 @@ class CommentResource(webapp2.RequestHandler):
         else:
             self.abort(404)
     
+    @ndb.transactional
     def post(self):
         d = json.loads(self.request.body)
         if d['safety'] == 'Borrell':
