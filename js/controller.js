@@ -320,25 +320,13 @@ function DeletePage($scope,$resource,$sce){
 
 function ArchivePage($scope,$resource){
     $scope.articles = [];
+    $scope.archiveresource = $resource("/API/archive");
 
-    var firstpageresource = $resource(
-	"/API/archive:q");
-
-    var data = firstpageresource.get({q:""}, function(){
+    var data = $scope.archiveresource.get(function(){
 	$scope.more = data.more;
 	$scope.next = data.next;
-	for (var i in data.articles){
-	    $scope.articles.push({
-		"when": data.articles[i].when,
-		"title": data.articles[i].title,
-		"key": data.articles[i].key,
-		"keywords": data.articles[i].keywords,
-		"ncomments": data.articles[i].ncomments
-	    }
-				);
-	}
+	$scope.articles = data.articles;
     }
-				    );
-
+				    );   
 }
 

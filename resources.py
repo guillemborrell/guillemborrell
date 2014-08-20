@@ -29,8 +29,7 @@ class ArchiveResource(webapp2.RequestHandler):
 
         else:
             more = True
-            archive =  list()
-            archive_map = OrderedDict()
+            archive = OrderedDict()
             curs = None
             
             while more:
@@ -42,14 +41,19 @@ class ArchiveResource(webapp2.RequestHandler):
                                     Article.when,
                                     Article.keywords])
                 for article in articles:
-                    archive.append(
-                        {'title': article.title,
-                         'when': article.when.strftime("%d/%m/%Y %H:%M:%S"),
-                         'keywords': article.keywords,
-                         'key': article.key.urlsafe(),
-                         'ncomments': 0}
-                    )
-                    archive_map[article.key.urlsafe()] = 0
+                    article_key = article.key.urlsafe()
+                    
+                    if article_key in archive:
+                        archive[article_key]['keywords'].extend(
+                            article.keywords)
+                    else:
+                        archive[article_key] = {
+                            'title': article.title,
+                            'when': article.when.strftime("%d/%m/%Y %H:%M:%S"),
+                            'keywords': article.keywords,
+                            'key': article_key,
+                            'ncomments': 0}
+                        
 
             more = True
             curs = None
@@ -61,15 +65,15 @@ class ArchiveResource(webapp2.RequestHandler):
 
                 for comment in page:
                     parent_key = comment.key.parent().urlsafe()
-                    if parent_key in archive_map:
-                        archive_map[parent_key] += 1
+                    if parent_key in archive:
+                        archive[parent_key]['ncomments'] += 1
                      
-            for i,ncomments in enumerate(archive_map.itervalues()):
-                archive[i]['ncomments'] = ncomments
 
             memcache.add('archive',archive,time=86400)
             self.response.out.headers['Content-Type'] = 'application/json'
-            self.response.out.write(json.dumps({'articles':archive}))
+            self.response.out.write(json.dumps(
+                {'articles':[a for a in archive.itervalues()]}
+            ))
     
 
 class ArticleResource(webapp2.RequestHandler):
