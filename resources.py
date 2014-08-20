@@ -44,7 +44,7 @@ class ArchiveResource(webapp2.RequestHandler):
                     article_key = article.key.urlsafe()
                     
                     if article_key in archive:
-                        archive['article_key']['keywords'].extend(
+                        archive[article_key]['keywords'].extend(
                             article.keywords)
                     else:
                         archive[article_key] = {
