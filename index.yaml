@@ -10,6 +10,19 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: Article
+  properties:
+  - name: when
+    direction: desc
+  - name: keywords
+  - name: title
+
+- kind: Article
+  properties:
+  - name: when
+    direction: desc
+  - name: title
+
 - kind: Comment
   ancestor: yes
   properties:

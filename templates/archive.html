@@ -6,14 +6,26 @@
     <p>Puede tardar un rato en cargar...</p>
     <table class="table">
 	<tr>
-	  <th>Título</th><th>Fecha</th><th>Comentarios</th>
+	  <th>Título</th>
+	  <th>Palbras clave</th>
+	  <th>Fecha</th>
+	  <th>Comentarios</th>
 	</tr>
 	<tr ng-repeat="article in articles">
 	  <td id="{{ article.key }}">
 	    <a href="/article/{{ article.key }}">{{ article.title }}</a>
 	  </td>
+	  <td>
+	    <span ng-repeat="k in article.keywords">
+	      <a href="/?tag={{ k }}">
+		<button class="btn">
+		  {{ k }}
+		</button>
+	      </a>
+	    </span>
+	  </td>
 	  <td>{{ article.when | date:'dd/MM/yyyy @ h:mma' }}</td>
-	  <td>{{ article.ncomments }} </td>
+	  <td>{{ article.ncomments }}</td>
 	</tr>
       </table>
   </div>

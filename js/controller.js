@@ -1,5 +1,13 @@
 angular.module('app', ['ngResource','ngSanitize']);
 
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+
 // Controller for the index page, that loads an entry list
 function shareTwitter (article) {
     window.open(
@@ -61,6 +69,7 @@ function resetpage(){
 
 
 function MainPage($scope,$resource,$sce,$location){
+    $scope.tag =  getParameterByName('tag')
     $scope.articles = [];
     $scope.shareTwitter = shareTwitter;
     $scope.shareFacebook = shareFacebook;
@@ -69,14 +78,33 @@ function MainPage($scope,$resource,$sce,$location){
     $scope.articleListResource = $resource("/API/articlelist");
     $scope.taggedArticleListResource = $resource("/API/taggedarticlelist");
 
-    var data = $scope.articleListResource.get( function(){
-	$scope.more = data.more;
-	$scope.next = data.next;
-	for (var i in data.articles){
-	    $scope.articles.push(fillArticle(data.articles[i],$sce));
-	}
+    if ($scope.tag){
+	$scope.taggednext = '';
+	var data = $scope.taggedArticleListResource.get(
+	    {tag: $scope.tag}, function(){
+		$scope.more = data.more;
+		$scope.taggednext = data.next;
+		$scope.taggedbutton = true;
+		for (var i in data.articles){
+		    $scope.articles.push(
+			fillArticle(data.articles[i],$sce));
+		}
+	    }
+	    
+	);
     }
-					     );
+    else{
+	var data = $scope.articleListResource.get( function(){
+	    $scope.more = data.more;
+	    $scope.next = data.next;
+	    for (var i in data.articles){
+		$scope.articles.push(
+		    fillArticle(data.articles[i],$sce));
+	    }
+	}
+
+						 );
+    }
     
     $scope.loadnext = function(){
 	var data = $scope.articleListResource.get(
@@ -304,6 +332,7 @@ function ArchivePage($scope,$resource){
 		"when": data.articles[i].when,
 		"title": data.articles[i].title,
 		"key": data.articles[i].key,
+		"keywords": data.articles[i].keywords,
 		"ncomments": data.articles[i].ncomments
 	    }
 				);

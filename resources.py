@@ -11,6 +11,7 @@ import logging
 import re, datetime
 import array
 import xml.etree.ElementTree as ET
+from collections import OrderedDict
 from google.appengine.ext import ndb
 from google.appengine.datastore.datastore_query import Cursor
 from models import Article, Comment
@@ -29,20 +30,43 @@ class ArchiveResource(webapp2.RequestHandler):
         else:
             more = True
             archive =  list()
+            archive_map = OrderedDict()
             curs = None
             
             while more:
-                articles, curs, more = Article.query(
-                ).order(-Article.when).fetch_page(50, start_cursor=curs)
+                articles, curs, more = Article.query().order(
+                    -Article.when).fetch_page(
+                        50,
+                        start_cursor=curs,
+                        projection=[Article.title, 
+                                    Article.when,
+                                    Article.keywords])
                 for article in articles:
-                    d = article.as_dict()
                     archive.append(
-                        {'title': d['title'],
-                         'ncomments': len(d['comments']),
-                         'when': d['when'],
-                         'key': d['key']}
+                        {'title': article.title,
+                         'when': article.when.strftime("%d/%m/%Y %H:%M:%S"),
+                         'keywords': article.keywords,
+                         'key': article.key.urlsafe(),
+                         'ncomments': 0}
                     )
+                    archive_map[article.key.urlsafe()] = 0
+
+            more = True
+            curs = None
+
+            while more:
+                page, curs, more = Comment.query().fetch_page(
+                    100,
+                    start_cursor = curs)
+
+                for comment in page:
+                    parent_key = comment.key.parent().urlsafe()
+                    if parent_key in archive_map:
+                        archive_map[parent_key] += 1
                      
+            for i,ncomments in enumerate(archive_map.itervalues()):
+                archive[i]['ncomments'] = ncomments
+
             memcache.add('archive',archive,time=86400)
             self.response.out.headers['Content-Type'] = 'application/json'
             self.response.out.write(json.dumps({'articles':archive}))
