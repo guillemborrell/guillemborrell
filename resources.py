@@ -44,7 +44,7 @@ class ArchiveResource(webapp2.RequestHandler):
                     article_key = article.key.urlsafe()
                     
                     if article_key in archive:
-                        archive[article_key]['keywords'].extend(
+                        archive['article_key']['keywords'].extend(
                             article.keywords)
                     else:
                         archive[article_key] = {
@@ -69,7 +69,9 @@ class ArchiveResource(webapp2.RequestHandler):
                         archive[parent_key]['ncomments'] += 1
                      
 
-            memcache.add('archive',archive,time=86400)
+            memcache.add('archive',
+                         [a for a in archive.itervalues()],
+                         time=86400)
             self.response.out.headers['Content-Type'] = 'application/json'
             self.response.out.write(json.dumps(
                 {'articles':[a for a in archive.itervalues()]}
