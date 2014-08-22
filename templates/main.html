@@ -39,28 +39,87 @@
   </head>
   
   <body data-spy="scroll" data-offset="0" data-target="#theMenu">
-    <!-- Menu -->
-    <nav class="menu" id="theMenu">
-      <div class="menu-wrap">
-	<h1 class="logo">
-	  <a href="/">I have become comfortably numb</a>
-	</h1>
-	<!--<i class="fa fa-arrow-right"></i>-->
-	<a href="#home" class="smoothScroll">Inicio</a>
-	<a href="#sobremi" class="smoothScroll">Sobre mi</a>
-	<a href="#addr" class="smoothScroll">Enlaces</a>
-	<a href="#contact" class="smoothScroll">Contactar</a>
-	<a href="/archive" class="smoothScroll">Archivo</a>
-	<a href="http://guillemborrell.es/feeds/latest/">
-	  <i class="fa fa-rss fa-2x"></i>
-	</a>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+          <button 
+             type="button" 
+             class="navbar-toggle" 
+             data-toggle="collapse" 
+             data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand page-scroll"
+             href="#page-top"></a>
+        </div>
+	
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="hidden">
+              <a href="#page-top"></a>
+            </li>
+            <li>
+	      <span class="fa-stack fa-lg">
+		<i class="fa fa-circle fa-stack-2x"></i>
+		<a class="smoothScroll"
+		   href="#home"
+		   title="Índice">
+		  <i class="fa fa-home fa-stack-1x"></i>
+		</a>
+	      </span>
+	      <span class="fa-stack fa-lg">
+		<i class="fa fa-circle fa-stack-2x"></i>
+		<a class="smoothScroll"
+		   href="#sobremi"
+		   title="Sobre mi">
+		  <i class="fa fa-user fa-stack-1x"></i>
+		</a>
+	      </span>
+	      <span class="fa-stack fa-lg">
+		<i class="fa fa-circle fa-stack-2x"></i>
+		<a class="smoothScroll"
+		   href="#addr"
+		   title="Enlaces">
+		  <i class="fa fa-external-link fa-stack-1x"></i>
+		</a>	
+	      </span>
+	      <span class="fa-stack fa-lg">
+		<i class="fa fa-circle fa-stack-2x"></i>
+		<a class="smoothScroll"
+		   href="/archive"
+		   title="Archivo">
+		  <i class="fa fa-archive fa-stack-1x">
+		  </i>
+		</a>
+	      </span>
+	      <span class="fa-stack fa-lg">
+	      	<i class="fa fa-circle fa-stack-2x"></i>
+		<a class="smoothScroll"
+		   href="http://guillemborrell.es/feeds/latest/"
+		   title="Feed RSS">
+	      	  <i class="fa fa-rss fa-stack-1x"></i>
+		</a>
+	      </span>
+	      <span class="fa-stack fa-lg">
+	      	<i class="fa fa-circle fa-stack-2x"></i>
+		<a class="smoothScroll"
+		   href="#contact"
+		   title="Contactar">
+	      	  <i class="fa fa-envelope fa-stack-1x"></i>
+		</a>
+	      </span>
+            </li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
       </div>
-      
-      <!-- Menu button -->
-      <div id="menuToggle"><i class="fa fa-bars"></i></div>
+      <!-- /.container-fluid -->
     </nav>
-    
-    
     
     <!-- ========== HEADER SECTION ========== -->
     <section id="home" name="home">
