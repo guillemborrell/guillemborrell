@@ -221,7 +221,7 @@ function ManagePage($scope,$resource,$sce){
 			 "keywords": "",
 			 "secret" : ""}
     $scope.articles = [];
-
+    
     var firstpageresource = $resource(
 	"/API/articlelist:q");
 
@@ -235,37 +235,38 @@ function ManagePage($scope,$resource,$sce){
 				    );
 
 
-   $scope.loadnext = function(){
-       var pageresource = $resource(
-	   "/API/articlelist?p=:q");
-
-       var data = pageresource.get({q:$scope.next}, function(){
-	   $scope.more = data.more;
-	   $scope.next = data.next;
+    $scope.loadnext = function(){
+	var pageresource = $resource(
+	    "/API/articlelist?p=:q");
+	
+	var data = pageresource.get({q:$scope.next}, function(){
+	    $scope.more = data.more;
+	    $scope.next = data.next;
 	    for (var i in data.articles){
 		$scope.articles.push(fillArticle(data.articles[i],$sce));
 	    }
-       }
-				  );
-   }
-
-
+	}
+				   );
+    }
+    
+    
     $scope.submitarticle = function(){
-	var articleresource = $resource(
-	    "/API/article",{},{ post: {method:'POST'}}
-	);
-	articleresource.post({"slug": $scope.newarticle.slug,
+	var articleresource = $resource("/API/article");
+	articleresource.save({"slug": $scope.newarticle.slug,
 			      "title": $scope.newarticle.title,
 			      "text": $scope.newarticle.text,
 			      "keywords": $scope.newarticle.keywords,
 			      "secret": $scope.newarticle.secret
-			     });
-	$scope.newarticle.slug = "";
-	$scope.newarticle.title = "";
-	$scope.newarticle.text = "";
-	$scope.newarticle.keywords = "";
-	$scope.newarticle.secret = "";
-	
+			     },
+			     function()
+			     {
+				 window.location.replace("/manage");
+			     },
+			     function()
+			     {
+				 alert("something wrong happened")
+			     }
+			    );	
     }
 }
 
@@ -292,18 +293,25 @@ function EditPage($scope,$resource,$sce){
 
 
     $scope.editArticle = function(){
-	var articleresource = $resource(
-	    "/API/article",{},{ post: {method:'POST'}}
-	);
-	articleresource.post({"slug": $scope.article.slug,
+	var articleresource = $resource('/API/article');
+	articleresource.save({"slug": $scope.article.slug,
 			      "title": $scope.article.title,
 			      "text": $scope.article.text,
 			      "keywords": $scope.article.keywords,
 			      "key": $scope.article.key,
 			      "when": $scope.article.when,
 			      "secret": $scope.article.secret
-			     });
-	window.location.replace("/manage");
+			     },
+			     function()
+			     {
+				 window.location.replace("/manage");
+			     },
+			     function()
+			     {
+				 alert("something wrong happened")
+			     }
+			    );
+	
     }
 }
 
